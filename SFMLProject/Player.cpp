@@ -28,9 +28,18 @@ Player::Player()
 {
 	// Set initial key bindings
 	mKeyBinding[sf::Keyboard::Left] = MoveLeft;
+	mKeyBinding[sf::Keyboard::A] = MoveLeft;
+
 	mKeyBinding[sf::Keyboard::Right] = MoveRight;
+	mKeyBinding[sf::Keyboard::D] = MoveRight;
+
 	mKeyBinding[sf::Keyboard::Up] = MoveUp;
+	mKeyBinding[sf::Keyboard::W] = MoveUp;
+
 	mKeyBinding[sf::Keyboard::Down] = MoveDown;
+	mKeyBinding[sf::Keyboard::S] = MoveDown;
+
+	mKeyBinding[sf::Keyboard::Escape] = Exit;
 
 	// Set initial action bindings
 	initializeActions();
@@ -96,6 +105,7 @@ void Player::initializeActions()
 	mActionBinding[MoveRight].action = derivedAction<Aircraft>(AircraftMover(+playerSpeed, 0.f));
 	mActionBinding[MoveUp].action = derivedAction<Aircraft>(AircraftMover(0.f, -playerSpeed));
 	mActionBinding[MoveDown].action = derivedAction<Aircraft>(AircraftMover(0.f, +playerSpeed));
+
 }
 
 bool Player::isRealtimeAction(Action action)
@@ -106,6 +116,7 @@ bool Player::isRealtimeAction(Action action)
 	case MoveRight:
 	case MoveDown:
 	case MoveUp:
+	case Exit:
 		return true;
 
 	default:

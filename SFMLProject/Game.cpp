@@ -16,6 +16,7 @@ Game::Game()
 {
 	mFont.loadFromFile("Media/Sansation.ttf");
 	mStatisticsText.setFont(mFont);
+	mStatisticsText.setFillColor(sf::Color::Black);
 	mStatisticsText.setPosition(5.f, 5.f);
 	mStatisticsText.setCharacterSize(10);
 }
@@ -46,7 +47,7 @@ void Game::processEvents()
 {
 	CommandQueue& commands = mWorld.getCommandQueue();
 	sf::Event event;
-	while (mWindow.pollEvent(event))
+	while (mWindow.pollEvent(event) || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
 	{
 		switch (event.type)
 		{
