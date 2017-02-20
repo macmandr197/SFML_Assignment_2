@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Aircraft" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAQAAAABAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Include\Book\Aircraft.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAgAAAAhAAAAAAAA=</HashCode>
+      <FileName>Include\Book\Entity.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game">
+    <Position X="6.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAgAAASAIAAAEAAAAAAIAAQiAAAAAACAAAEAUAAA=</HashCode>
+      <FileName>Include\Book\Game.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResourceHolder&lt;Resource, Identifier&gt;" Collapsed="true">
+    <Position X="2.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAACAAQAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Include\Book\ResourceHolder.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneNode" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Typedef Name="SceneNode::Ptr" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Include\Book\SceneNode.hpp</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQCBAAAAEACAAAAAAIAAAUAAABAAgBAAAAAAAAEABA=</HashCode>
+      <FileName>Include\Book\SceneNode.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpriteNode" Collapsed="true">
+    <Position X="2.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAABA=</HashCode>
+      <FileName>Include\Book\SpriteNode.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="World">
+    <Position X="11" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="World::Layer" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Include\Book\World.hpp</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AgAAAAQABBAgQABAAAIAABIAAEAIAAAAAAAAAAAEAQA=</HashCode>
+      <FileName>Include\Book\World.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="sf::Texture">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="sf::Texture::CoordinateType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>c:\Hooman\GBC\GAME2002\S4-GAME2002-T163\Week 4\SFMLWeek4 - Complete\SFML-2.4.1\include\SFML\Graphics\Texture.hpp</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AIAAEQAAYMACgAhCACAMAgAAABBAACAAAAJwBAJEAIg=</HashCode>
+      <FileName>c:\Hooman\GBC\GAME2002\S4-GAME2002-T163\Week 4\SFMLWeek4 - Complete\SFML-2.4.1\include\SFML\Graphics\Texture.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="sf::RenderWindow">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIBAAAAAAAAAQASAAAAAEAAgAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Hooman\GBC\GAME2002\S4-GAME2002-T163\Week 4\SFMLWeek4 - Complete\SFML-2.4.1\include\SFML\Graphics\RenderWindow.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Typedef Name="TextureHolder" Collapsed="true">
+    <Position X="2.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Include\Book\ResourceIdentifiers.hpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="Textures::ID">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAEQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Include\Book\ResourceIdentifiers.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
