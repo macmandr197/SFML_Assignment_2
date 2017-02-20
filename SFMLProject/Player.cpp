@@ -18,6 +18,7 @@ struct AircraftMover
 	void operator() (Aircraft& aircraft, sf::Time) const
 	{
 		aircraft.accelerate(velocity);
+		//test
 	}
 
 	sf::Vector2f velocity;
