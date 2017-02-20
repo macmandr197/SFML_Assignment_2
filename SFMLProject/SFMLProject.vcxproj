@@ -22,7 +22,7 @@
     <ProjectGuid>{AFE78A7E-F049-4A93-8BAC-39A3516B1689}</ProjectGuid>
     <RootNamespace>SFMLProject</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>SFMLKeyBindingProject</ProjectName>
+    <ProjectName>Assignment1</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -75,10 +75,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)/SFMLProject/Include;$(SolutionDir)/../SFML-2.4.1/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/SFMLProject/Include;$(SolutionDir)/SFML-2.4.1/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)/../SFML-2.4.1/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/SFML-2.4.1/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -119,6 +119,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="Include\Book\ResourceHolder.inl" />
+    <None Include="Include\Book\StringHelpers.inl" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="Include\Book\Aircraft.hpp" />
     <ClInclude Include="Include\Book\Category.hpp" />
     <ClInclude Include="Include\Book\Command.hpp" />
@@ -132,11 +137,6 @@
     <ClInclude Include="Include\Book\SpriteNode.hpp" />
     <ClInclude Include="Include\Book\StringHelpers.hpp" />
     <ClInclude Include="Include\Book\World.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="Include\Book\ResourceHolder.inl" />
-    <None Include="Include\Book\StringHelpers.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Aircraft.cpp" />

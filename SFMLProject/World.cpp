@@ -78,7 +78,7 @@ void World::buildScene()
 	}
 
 	// Prepare the tiled background
-	sf::Texture& texture = mTextures.get(Textures::background);
+	sf::Texture& texture = mTextures.get(Textures::background); //setting the background sprite
 	sf::IntRect textureRect(mWorldBounds);
 	texture.setRepeated(true);
 
