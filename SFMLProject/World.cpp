@@ -1,6 +1,7 @@
 #include <Book/World.hpp>
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "Doodle.hpp"
 
 
 World::World(sf::RenderWindow& window)
@@ -32,7 +33,7 @@ CommandQueue& World::getCommandQueue()
 void World::update(sf::Time dt)
 {
 	// Scroll the world
-	mWorldView.move(0.f, mScrollSpeed * dt.asSeconds());	
+	//mWorldView.move(0.f, mScrollSpeed * dt.asSeconds());	
 	mPlayerAircraft->setVelocity(0.0f, 0.0f);
 
 	// Forward commands to scene graph, adapt velocity (scrolling, diagonal correction)
@@ -58,10 +59,7 @@ void World::draw()
 
 void World::loadTextures()
 {
-	mTextures.load(Textures::Eagle, "Media/Textures/Eagle.png");
-	mTextures.load(Textures::Raptor, "Media/Textures/Raptor.png");
-	mTextures.load(Textures::Desert, "Media/Textures/Desert.png");
-	mTextures.load(Textures::doodle, "Media/Textures/doodle.png");
+	mTextures.load(Textures::DoodlePlayer, "Media/Textures/DoodlePlayer.png");
 	mTextures.load(Textures::platform, "Media/Textures/platform.png");
 	mTextures.load(Textures::background, "Media/Textures/background.png");
 }
@@ -88,7 +86,7 @@ void World::buildScene()
 	mSceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
 	// Add player's aircraft
-	std::unique_ptr<Aircraft> leader(new Aircraft(Aircraft::Eagle, mTextures));
+	std::unique_ptr<Doodle> leader(new Doodle(Doodle::DoodlePlayer, mTextures));
 	mPlayerAircraft = leader.get();
 	mPlayerAircraft->setPosition(mSpawnPosition);
 	mSceneLayers[Air]->attachChild(std::move(leader));
@@ -109,7 +107,7 @@ void World::adaptPlayerPosition()
 {
 	// Keep player's position inside the screen bounds, at least borderDistance units from the border
 	sf::FloatRect viewBounds(mWorldView.getCenter() - mWorldView.getSize() / 2.f, mWorldView.getSize());
-	const float borderDistance = 100.f;
+	const float borderDistance = 35.f;
 
 	sf::Vector2f position = mPlayerAircraft->getPosition();
 	position.x = std::max(position.x, viewBounds.left + borderDistance);
@@ -128,7 +126,7 @@ void World::adaptPlayerVelocity()
 		mPlayerAircraft->setVelocity(velocity / std::sqrt(2.f));
 
 	// Add scrolling velocity
-	mPlayerAircraft->accelerate(0.f, mScrollSpeed);
+	//mPlayerAircraft->accelerate(0.f, mScrollSpeed);
 }
 
 #pragma endregion

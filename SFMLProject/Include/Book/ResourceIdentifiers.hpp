@@ -15,7 +15,7 @@ namespace Textures
 		Eagle,
 		Raptor,
 		Desert,
-		doodle,
+		DoodlePlayer,
 		background,
 		platform,
 	};

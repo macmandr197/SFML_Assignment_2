@@ -7,7 +7,7 @@
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 
 Game::Game()
-: mWindow(sf::VideoMode(400, 533), "Command", sf::Style::Close)
+: mWindow(sf::VideoMode(400, 533), "Doodle Game!", sf::Style::Close)
 , mWorld(mWindow)
 , mFont()
 , mStatisticsText()
@@ -37,7 +37,7 @@ void Game::run()
 			update(TimePerFrame);
 
 		}
-
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) mWindow.close();
 		updateStatistics(elapsedTime);
 		render();
 	}

@@ -1,23 +1,22 @@
 #pragma region step 2
 #include <Book/Player.hpp>
 #include <Book/CommandQueue.hpp>
-#include <Book/Aircraft.hpp>
-
 #include <map>
 #include <string>
 #include <algorithm>
+#include "Doodle.hpp"
 
 
-struct AircraftMover
+struct DoodleMover
 {
-	AircraftMover(float vx, float vy)
+	DoodleMover(float vx, float vy)
 		: velocity(vx, vy)
 	{
 	}
 
-	void operator() (Aircraft& aircraft, sf::Time) const
+	void operator() (Doodle& doodle, sf::Time) const
 	{
-		aircraft.accelerate(velocity);
+		doodle.accelerate(velocity);
 		//test
 	}
 
@@ -39,7 +38,6 @@ Player::Player()
 	mKeyBinding[sf::Keyboard::Down] = MoveDown;
 	mKeyBinding[sf::Keyboard::S] = MoveDown;
 
-	mKeyBinding[sf::Keyboard::Escape] = Exit;
 
 	// Set initial action bindings
 	initializeActions();
@@ -101,10 +99,10 @@ void Player::initializeActions()
 {
 	const float playerSpeed = 200.f;
 
-	mActionBinding[MoveLeft].action = derivedAction<Aircraft>(AircraftMover(-playerSpeed, 0.f));
-	mActionBinding[MoveRight].action = derivedAction<Aircraft>(AircraftMover(+playerSpeed, 0.f));
-	mActionBinding[MoveUp].action = derivedAction<Aircraft>(AircraftMover(0.f, -playerSpeed));
-	mActionBinding[MoveDown].action = derivedAction<Aircraft>(AircraftMover(0.f, +playerSpeed));
+	mActionBinding[MoveLeft].action = derivedAction<Doodle>(DoodleMover(-playerSpeed, 0.f));
+	mActionBinding[MoveRight].action = derivedAction<Doodle>(DoodleMover(+playerSpeed, 0.f));
+	mActionBinding[MoveUp].action = derivedAction<Doodle>(DoodleMover(0.f, -playerSpeed));
+	mActionBinding[MoveDown].action = derivedAction<Doodle>(DoodleMover(0.f, +playerSpeed));
 
 }
 
@@ -116,7 +114,6 @@ bool Player::isRealtimeAction(Action action)
 	case MoveRight:
 	case MoveDown:
 	case MoveUp:
-	case Exit:
 		return true;
 
 	default:

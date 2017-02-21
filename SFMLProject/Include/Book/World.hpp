@@ -13,6 +13,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 #include <array>
+#include "../../Doodle.hpp"
 
 
 // Forward declaration
@@ -59,7 +60,7 @@ class World : private sf::NonCopyable
 		sf::FloatRect						mWorldBounds;
 		sf::Vector2f						mSpawnPosition;
 		float								mScrollSpeed;
-		Aircraft*							mPlayerAircraft;
+		Doodle*							mPlayerAircraft;
 };
 
 
