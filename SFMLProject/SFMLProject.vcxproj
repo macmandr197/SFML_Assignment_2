@@ -131,6 +131,7 @@
     <ClInclude Include="Include\Book\CommandQueue.hpp" />
     <ClInclude Include="Include\Book\Entity.hpp" />
     <ClInclude Include="Include\Book\Game.hpp" />
+    <ClInclude Include="Include\Book\Platform.hpp" />
     <ClInclude Include="Include\Book\Player.hpp" />
     <ClInclude Include="Include\Book\ResourceHolder.hpp" />
     <ClInclude Include="Include\Book\ResourceIdentifiers.hpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="SpriteNode.cpp" />

@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include <algorithm>
-#include "Doodle.hpp"
+#include <Book/Doodle.hpp>
 
 
 struct DoodleMover
@@ -101,6 +101,8 @@ void Player::initializeActions()
 
 	mActionBinding[MoveLeft].action = derivedAction<Doodle>(DoodleMover(-playerSpeed, 0.f));
 	mActionBinding[MoveRight].action = derivedAction<Doodle>(DoodleMover(+playerSpeed, 0.f));
+
+
 	mActionBinding[MoveUp].action = derivedAction<Doodle>(DoodleMover(0.f, -playerSpeed));
 	mActionBinding[MoveDown].action = derivedAction<Doodle>(DoodleMover(0.f, +playerSpeed));
 

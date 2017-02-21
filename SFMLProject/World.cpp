@@ -1,7 +1,18 @@
 #include <Book/World.hpp>
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "Doodle.hpp"
+#include <iostream>
+
+struct point
+{
+	int x, y;
+};
+
+int x = 100, y = 100, h = 200;
+float dx = 0, dy = 0;
+
+point plat[20];
+
 
 
 World::World(sf::RenderWindow& window)
@@ -10,15 +21,26 @@ World::World(sf::RenderWindow& window)
 , mTextures() 
 , mSceneGraph()
 , mSceneLayers()
-, mWorldBounds(0.f, 0.f, mWorldView.getSize().x, 2000.f)
+, mWorldBounds(0.f, 0.f, mWorldView.getSize().x, 533.f)
 , mSpawnPosition(mWorldView.getSize().x / 2.f, mWorldBounds.height - mWorldView.getSize().y / 2.f)
 , mScrollSpeed(-50.f)
-, mPlayerAircraft(nullptr)
+, mDoodle(nullptr)
+, mPlatform()
+, sPlat()
+, t2()
 {
 	loadTextures();
 	buildScene();
+	t2.loadFromFile("Media/Textures/platform.png");
+	sPlat.setTexture(t2);
+	for (int i = 0; i < 10; i++) //'randomizes' where the platforms are
+	{
+		plat[i].x = rand() % 400;
+		plat[i].y = rand() % 533;
+	}
 
 	// Prepare the view
+	
 	mWorldView.setCenter(mSpawnPosition);
 }
 
@@ -34,7 +56,38 @@ void World::update(sf::Time dt)
 {
 	// Scroll the world
 	//mWorldView.move(0.f, mScrollSpeed * dt.asSeconds());	
-	mPlayerAircraft->setVelocity(0.0f, 0.0f);
+	//mDoodle->setVelocity(0.0f, 0.0f);
+	dy += 0.2;
+	y += dy;
+
+
+	if (y > 453)  dy = -10; //if player falls to the bottom of the screen
+
+	if (y < h) //if player pos is higher than the screen
+		for (int i = 0; i < 10; i++)
+		{
+			y = h;
+			plat[i].y = plat[i].y - dy;
+			if (plat[i].y > 533) { plat[i].y = 0; plat[i].x = rand() % 400; }
+		}
+
+	for (int i = 0; i<10; i++)
+		if ((x + 50>plat[i].x) && (x + 20 < plat[i].x + 68) //if player hits platform
+			&& (y + 70 > plat[i].y) && (y + 70 < plat[i].y + 14) && (dy > 0))  dy = -10;
+
+	mDoodle->setPosition(x, y);
+
+
+	for (int i = 0; i < 10; i++)
+	{
+		sPlat.setPosition(plat[i].x, plat[i].y);
+	}
+
+	//std::cout << mWorldView.getSize().y << std::endl;
+	sf::Vector2f worldpos = mDoodle->getWorldPosition();
+	sf::Vector2f pos = mDoodle->getPosition();
+
+	std::cout << "Player's World Position: " << worldpos.x << ", " << worldpos.y << " Player's Position: " << pos.x << ", " << pos.y << std::endl;
 
 	// Forward commands to scene graph, adapt velocity (scrolling, diagonal correction)
 	while (!mCommandQueue.isEmpty())
@@ -42,7 +95,7 @@ void World::update(sf::Time dt)
 
 #pragma region step 5
 
-	adaptPlayerVelocity();
+	//adaptPlayerVelocity();
 
 	// Regular update step, adapt position (correct if outside view)
 	mSceneGraph.update(dt);
@@ -87,18 +140,23 @@ void World::buildScene()
 
 	// Add player's aircraft
 	std::unique_ptr<Doodle> leader(new Doodle(Doodle::DoodlePlayer, mTextures));
-	mPlayerAircraft = leader.get();
-	mPlayerAircraft->setPosition(mSpawnPosition);
+	mDoodle = leader.get();
+	mDoodle->setPosition(mSpawnPosition);
 	mSceneLayers[Air]->attachChild(std::move(leader));
+	mDoodle->setVelocity(0.f, 0.f);
+	
+	//add platform
+	
+
 
 	// Add two escorting aircrafts, placed relatively to the main plane
 	/*std::unique_ptr<Aircraft> leftEscort(new Aircraft(Aircraft::Raptor, mTextures));
 	leftEscort->setPosition(-80.f, 50.f);
-	mPlayerAircraft->attachChild(std::move(leftEscort));
+	mDoodle->attachChild(std::move(leftEscort));
 
 	std::unique_ptr<Aircraft> rightEscort(new Aircraft(Aircraft::Raptor, mTextures));
 	rightEscort->setPosition(80.f, 50.f); 
-	mPlayerAircraft->attachChild(std::move(rightEscort));*/
+	mDoodle->attachChild(std::move(rightEscort));*/
 }
 
 #pragma region step 4
@@ -107,26 +165,29 @@ void World::adaptPlayerPosition()
 {
 	// Keep player's position inside the screen bounds, at least borderDistance units from the border
 	sf::FloatRect viewBounds(mWorldView.getCenter() - mWorldView.getSize() / 2.f, mWorldView.getSize());
-	const float borderDistance = 35.f;
+	const float borderDistance = 0.f;
 
-	sf::Vector2f position = mPlayerAircraft->getPosition();
+	sf::Vector2f position = mDoodle->getPosition();
 	position.x = std::max(position.x, viewBounds.left + borderDistance);
 	position.x = std::min(position.x, viewBounds.left + viewBounds.width - borderDistance);
-	position.y = std::max(position.y, viewBounds.top + borderDistance);
+	//position.y = std::max(position.y, viewBounds.top + borderDistance);
 	position.y = std::min(position.y, viewBounds.top + viewBounds.height - borderDistance);
-	mPlayerAircraft->setPosition(position);
+	mDoodle->setPosition(position);
 }
 
 void World::adaptPlayerVelocity()
 {
-	sf::Vector2f velocity = mPlayerAircraft->getVelocity();
+	sf::Vector2f velocity = mDoodle->getVelocity();
 
 	// If moving diagonally, reduce velocity (to have always same velocity)
 	if (velocity.x != 0.f && velocity.y != 0.f)
-		mPlayerAircraft->setVelocity(velocity / std::sqrt(2.f));
+		mDoodle->setVelocity(velocity / std::sqrt(2.f));
 
 	// Add scrolling velocity
-	//mPlayerAircraft->accelerate(0.f, mScrollSpeed);
+	mDoodle->accelerate(0.f, 300.f);
+	
+
+
 }
 
 #pragma endregion

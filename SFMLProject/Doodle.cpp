@@ -2,7 +2,8 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
-#include "Doodle.hpp"
+
+#include <Book/Doodle.hpp>
 
 
 Textures::ID toTextureID(Doodle::Type type)
