@@ -8,6 +8,8 @@ struct point
 	int x, y;
 };
 
+int count = 0;
+
 int x = 100, y = 100, h = 200;
 float dx = 0, dy = 0;
 
@@ -61,30 +63,52 @@ void World::update(sf::Time dt)
 	y += dy;
 
 
-	if (y > 453)  dy = -10; //if player falls to the bottom of the screen
+	if (y > 453) //if player falls to the bottom of the screen
+	{
+		dy = -20;
+	} 
 
 	if (y < h) //if player pos is higher than the screen
 		for (int i = 0; i < 10; i++)
 		{
 			y = h;
 			plat[i].y = plat[i].y - dy;
-			if (plat[i].y > 533) { plat[i].y = 0; plat[i].x = rand() % 400; }
+			if (plat[i].y > 533)
+			{
+				plat[i].y = 0; plat[i].x = rand() % 400;
+				//mPlatform[i]->setPosition(rand() % 400, 0);
+			}
 		}
 
 	for (int i = 0; i<10; i++)
-		if ((x + 50>plat[i].x) && (x + 20 < plat[i].x + 68) //if player hits platform
-			&& (y + 70 > plat[i].y) && (y + 70 < plat[i].y + 14) && (dy > 0))  dy = -10;
+	{
+		if ((x + 50 > mPlatform[i]->getPosition().x) && (x + 20 < mPlatform[i]->getPosition().x + 68) && (y + 70 > mPlatform[i]->getPosition().y) && (y + 70 < mPlatform[i]->getPosition().y + 14) && (dy > 0))
+		{
+			dy = -10;
+		}//if player hits platform
+
+		
+	}
 
 	mDoodle->setPosition(x, y);
 
+	for (int i = 0; i < 10; i++)
+	{		
+			//add platform
+			//std::unique_ptr<Platform> myplat(new Platform(Platform::platform, mTextures));
+			//mPlatform = myplat.get();
+			mPlatform[i]->setPosition(plat[i].x, plat[i].y);
+			//mSceneLayers[Air]->attachChild(std::move(myplat));
+	}
 
+	
 	
 
 	//std::cout << mWorldView.getSize().y << std::endl;
-	sf::Vector2f worldpos = mDoodle->getWorldPosition();
-	sf::Vector2f pos = mDoodle->getPosition();
+	//sf::Vector2f worldpos = mDoodle->getWorldPosition();
+	//sf::Vector2f pos = mDoodle->getPosition();
 
-	std::cout << "Player's World Position: " << worldpos.x << ", " << worldpos.y << " Player's Position: " << pos.x << ", " << pos.y << std::endl;
+	//std::cout << "Player's World Position: " << worldpos.x << ", " << worldpos.y << " Player's Position: " << pos.x << ", " << pos.y << std::endl;
 
 	// Forward commands to scene graph, adapt velocity (scrolling, diagonal correction)
 	while (!mCommandQueue.isEmpty())
@@ -105,11 +129,7 @@ void World::draw()
 {
 	mWindow.setView(mWorldView);
 	mWindow.draw(mSceneGraph);
-	for (int i = 0; i < 10; i++)
-	{
-		mPlatform->setPosition(plat[i].x, plat[i].y);
-		
-	}
+	
 }
 
 void World::loadTextures()
@@ -140,12 +160,7 @@ void World::buildScene()
 	backgroundSprite->setPosition(mWorldBounds.left, mWorldBounds.top);
 	mSceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
-	//add platform
-	std::unique_ptr<Platform> plat(new Platform(Platform::platform, mTextures));
-	mPlatform = plat.get();
-	mPlatform->setPosition(mSpawnPosition);
-	mSceneLayers[Air]->attachChild(std::move(plat));
-	//mPlatform->setVelocity(0.f, 0.f);
+	
 
 	// Add player's aircraft
 	std::unique_ptr<Doodle> leader(new Doodle(Doodle::DoodlePlayer, mTextures));
@@ -154,7 +169,14 @@ void World::buildScene()
 	mSceneLayers[Air]->attachChild(std::move(leader));
 	mDoodle->setVelocity(0.f, 0.f);
 	
-
+	//add platform
+	for (int i = 0; i < 10; i++)
+	{
+	std::unique_ptr<Platform> myplat(new Platform(Platform::platform, mTextures));
+	mPlatform[i] = myplat.get();
+	mSceneLayers[Air]->attachChild(std::move(myplat));
+		
+	}
 
 	// Add two escorting aircrafts, placed relatively to the main plane
 	/*std::unique_ptr<Aircraft> leftEscort(new Aircraft(Aircraft::Raptor, mTextures));
@@ -172,7 +194,7 @@ void World::adaptPlayerPosition()
 {
 	// Keep player's position inside the screen bounds, at least borderDistance units from the border
 	sf::FloatRect viewBounds(mWorldView.getCenter() - mWorldView.getSize() / 2.f, mWorldView.getSize());
-	const float borderDistance = 0.f;
+	const float borderDistance = 33.f;
 
 	sf::Vector2f position = mDoodle->getPosition();
 	position.x = std::max(position.x, viewBounds.left + borderDistance);
