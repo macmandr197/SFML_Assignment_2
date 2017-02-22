@@ -78,10 +78,7 @@ void World::update(sf::Time dt)
 	mDoodle->setPosition(x, y);
 
 
-	for (int i = 0; i < 10; i++)
-	{
-		sPlat.setPosition(plat[i].x, plat[i].y);
-	}
+	
 
 	//std::cout << mWorldView.getSize().y << std::endl;
 	sf::Vector2f worldpos = mDoodle->getWorldPosition();
@@ -108,6 +105,11 @@ void World::draw()
 {
 	mWindow.setView(mWorldView);
 	mWindow.draw(mSceneGraph);
+	for (int i = 0; i < 10; i++)
+	{
+		mPlatform->setPosition(plat[i].x, plat[i].y);
+		
+	}
 }
 
 void World::loadTextures()
@@ -138,14 +140,19 @@ void World::buildScene()
 	backgroundSprite->setPosition(mWorldBounds.left, mWorldBounds.top);
 	mSceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
+	//add platform
+	std::unique_ptr<Platform> plat(new Platform(Platform::platform, mTextures));
+	mPlatform = plat.get();
+	mPlatform->setPosition(mSpawnPosition);
+	mSceneLayers[Air]->attachChild(std::move(plat));
+	//mPlatform->setVelocity(0.f, 0.f);
+
 	// Add player's aircraft
 	std::unique_ptr<Doodle> leader(new Doodle(Doodle::DoodlePlayer, mTextures));
 	mDoodle = leader.get();
 	mDoodle->setPosition(mSpawnPosition);
 	mSceneLayers[Air]->attachChild(std::move(leader));
 	mDoodle->setVelocity(0.f, 0.f);
-	
-	//add platform
 	
 
 

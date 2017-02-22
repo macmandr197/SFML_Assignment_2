@@ -35,6 +35,6 @@ unsigned int Platform::getCategory() const
 	switch (mType)
 	{
 	case platform:
-		return Category::PlayerAircraft;
+		return Category::EnemyAircraft;
 	}
 }
