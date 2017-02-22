@@ -76,16 +76,16 @@ void World::update(sf::Time dt)
 			if (plat[i].y > 533)
 			{
 				plat[i].y = 0; plat[i].x = rand() % 400;
-				//mPlatform[i]->setPosition(rand() % 400, 0);
 			}
 		}
 
-	for (int i = 0; i<10; i++)
+	for (int i = 0; i<10; i++) // if player hits platform
 	{
-		if ((x + 50 > mPlatform[i]->getPosition().x) && (x + 20 < mPlatform[i]->getPosition().x + 68) && (y + 70 > mPlatform[i]->getPosition().y) && (y + 70 < mPlatform[i]->getPosition().y + 14) && (dy > 0))
+		if ((x + 50 > mPlatform[i]->getPosition().x) && (x + 20 < mPlatform[i]->getPosition().x + 68) &&
+			(y + 70 > mPlatform[i]->getPosition().y) && (y + 70 < mPlatform[i]->getPosition().y + 14) && (dy > 0))
 		{
 			dy = -10;
-		}//if player hits platform
+		}
 
 		
 	}
@@ -93,13 +93,7 @@ void World::update(sf::Time dt)
 	mDoodle->setPosition(x, y);
 
 	for (int i = 0; i < 10; i++)
-	{		
-			//add platform
-			//std::unique_ptr<Platform> myplat(new Platform(Platform::platform, mTextures));
-			//mPlatform = myplat.get();
 			mPlatform[i]->setPosition(plat[i].x, plat[i].y);
-			//mSceneLayers[Air]->attachChild(std::move(myplat));
-	}
 
 	
 	
@@ -177,15 +171,6 @@ void World::buildScene()
 	mSceneLayers[Air]->attachChild(std::move(myplat));
 		
 	}
-
-	// Add two escorting aircrafts, placed relatively to the main plane
-	/*std::unique_ptr<Aircraft> leftEscort(new Aircraft(Aircraft::Raptor, mTextures));
-	leftEscort->setPosition(-80.f, 50.f);
-	mDoodle->attachChild(std::move(leftEscort));
-
-	std::unique_ptr<Aircraft> rightEscort(new Aircraft(Aircraft::Raptor, mTextures));
-	rightEscort->setPosition(80.f, 50.f); 
-	mDoodle->attachChild(std::move(rightEscort));*/
 }
 
 #pragma region step 4
