@@ -124,12 +124,14 @@
     <None Include="Include\Book\StringHelpers.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Doodle.hpp" />
     <ClInclude Include="Include\Book\Aircraft.hpp" />
     <ClInclude Include="Include\Book\Category.hpp" />
     <ClInclude Include="Include\Book\Command.hpp" />
     <ClInclude Include="Include\Book\CommandQueue.hpp" />
     <ClInclude Include="Include\Book\Entity.hpp" />
     <ClInclude Include="Include\Book\Game.hpp" />
+    <ClInclude Include="Include\Book\Platform.hpp" />
     <ClInclude Include="Include\Book\Player.hpp" />
     <ClInclude Include="Include\Book\ResourceHolder.hpp" />
     <ClInclude Include="Include\Book\ResourceIdentifiers.hpp" />
@@ -142,9 +144,11 @@
     <ClCompile Include="Aircraft.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandQueue.cpp" />
+    <ClCompile Include="Doodle.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="SpriteNode.cpp" />

@@ -63,6 +63,12 @@
     <ClInclude Include="Include\Book\World.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Doodle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Book\Platform.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Aircraft.cpp">
@@ -93,6 +99,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Doodle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

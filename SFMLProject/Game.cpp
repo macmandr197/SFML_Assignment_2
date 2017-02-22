@@ -7,18 +7,23 @@
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 
 Game::Game()
-: mWindow(sf::VideoMode(400, 533), "Command", sf::Style::Close)
+: mWindow(sf::VideoMode(400, 533), "Doodle Game!", sf::Style::Close)
 , mWorld(mWindow)
 , mFont()
 , mStatisticsText()
 , mStatisticsUpdateTime()
 , mStatisticsNumFrames(0)
+, mPlayer()
 {
 	mFont.loadFromFile("Media/Sansation.ttf");
 	mStatisticsText.setFont(mFont);
 	mStatisticsText.setFillColor(sf::Color::Black);
 	mStatisticsText.setPosition(5.f, 5.f);
 	mStatisticsText.setCharacterSize(10);
+	//t2.loadFromFile("Media/Textures/platform.png");
+
+	//sPlat.setPosition(200.f, 200.f);
+
 }
 
 void Game::run()
@@ -37,7 +42,7 @@ void Game::run()
 			update(TimePerFrame);
 
 		}
-
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) mWindow.close();
 		updateStatistics(elapsedTime);
 		render();
 	}
