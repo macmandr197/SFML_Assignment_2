@@ -1,8 +1,9 @@
 #include <Book/World.hpp>
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "Book/Utility.hpp"
 #include <iostream>
-
+Utility util;
 struct point
 {
 	int x, y;
@@ -10,7 +11,7 @@ struct point
 
 int count = 0;
 
-int x = 100, y = 100, h = 200;
+int x = 0, y = 0, h = 200;
 float dx = 0, dy = 0;
 
 point plat[20];
@@ -61,18 +62,34 @@ void World::update(sf::Time dt)
 	//mDoodle->setVelocity(0.0f, 0.0f);
 	dy += 0.2;
 	y += dy;
-
-
-	if (y > 453) //if player falls to the bottom of the screen
+	
+	x = mDoodle->getPosition().x;
+	
+	if (y > 533-40) //if player falls to the bottom of the screen
 	{
-		dy = -20;
+		dy = -10;
 	} 
+
+	
+
+	for (int i = 0; i<10; i++)//if player hits platform
+	{
+		if ((x + 40 > mPlatform[i]->getPosition().x) && 
+			(x - 10 < mPlatform[i]->getPosition().x + 68) && 
+			(y + 40 > mPlatform[i]->getPosition().y) && 
+			(y + 40 < mPlatform[i]->getPosition().y + 12) && (dy > 0))
+		{
+			dy = -10;
+		}
+
+		
+	}
 
 	if (y < h) //if player pos is higher than the screen
 		for (int i = 0; i < 10; i++)
 		{
 			y = h;
-			plat[i].y = plat[i].y - dy;
+			plat[i].y -= dy;
 			if (plat[i].y > 533)
 			{
 				plat[i].y = 0; plat[i].x = rand() % 400;
@@ -80,43 +97,23 @@ void World::update(sf::Time dt)
 			}
 		}
 
-	for (int i = 0; i<10; i++)
-	{
-		if ((x + 50 > mPlatform[i]->getPosition().x) && (x + 20 < mPlatform[i]->getPosition().x + 68) && (y + 70 > mPlatform[i]->getPosition().y) && (y + 70 < mPlatform[i]->getPosition().y + 14) && (dy > 0))
-		{
-			dy = -10;
-		}//if player hits platform
-
-		
-	}
-
-	mDoodle->setPosition(x, y);
-
 	for (int i = 0; i < 10; i++)
-	{		
-			//add platform
-			//std::unique_ptr<Platform> myplat(new Platform(Platform::platform, mTextures));
-			//mPlatform = myplat.get();
+	{
 			mPlatform[i]->setPosition(plat[i].x, plat[i].y);
-			//mSceneLayers[Air]->attachChild(std::move(myplat));
 	}
-
-	
-	
-
-	//std::cout << mWorldView.getSize().y << std::endl;
-	//sf::Vector2f worldpos = mDoodle->getWorldPosition();
-	//sf::Vector2f pos = mDoodle->getPosition();
 
 	//std::cout << "Player's World Position: " << worldpos.x << ", " << worldpos.y << " Player's Position: " << pos.x << ", " << pos.y << std::endl;
 
 	// Forward commands to scene graph, adapt velocity (scrolling, diagonal correction)
 	while (!mCommandQueue.isEmpty())
+	{
 		mSceneGraph.onCommand(mCommandQueue.pop(), dt);
+	}
 
 #pragma region step 5
 
-	//adaptPlayerVelocity();
+	adaptPlayerVelocity();
+	mDoodle->setPosition(x, y);
 
 	// Regular update step, adapt position (correct if outside view)
 	mSceneGraph.update(dt);
@@ -170,7 +167,7 @@ void World::buildScene()
 	mDoodle->setVelocity(0.f, 0.f);
 	
 	//add platform
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 	std::unique_ptr<Platform> myplat(new Platform(Platform::platform, mTextures));
 	mPlatform[i] = myplat.get();
@@ -195,12 +192,20 @@ void World::adaptPlayerPosition()
 	// Keep player's position inside the screen bounds, at least borderDistance units from the border
 	sf::FloatRect viewBounds(mWorldView.getCenter() - mWorldView.getSize() / 2.f, mWorldView.getSize());
 	const float borderDistance = 33.f;
+	const float maxVel = 100.f;
 
 	sf::Vector2f position = mDoodle->getPosition();
 	position.x = std::max(position.x, viewBounds.left + borderDistance);
 	position.x = std::min(position.x, viewBounds.left + viewBounds.width - borderDistance);
+	
+	//sf::Vector2f clampedPos = mDoodle->getVelocity();
+	//clampedPos.x = util.Clamp(mDoodle->getVelocity().x, -200.f, 200.f);
+	//clampedPos = sf::Vector2f(0, mDoodle->getVelocity().y);
+	//mDoodle->setVelocity(clampedPos);
+	
+
 	//position.y = std::max(position.y, viewBounds.top + borderDistance);
-	position.y = std::min(position.y, viewBounds.top + viewBounds.height - borderDistance);
+	//position.y = std::min(position.y, viewBounds.top + viewBounds.height - borderDistance);
 	mDoodle->setPosition(position);
 }
 
@@ -213,7 +218,7 @@ void World::adaptPlayerVelocity()
 		mDoodle->setVelocity(velocity / std::sqrt(2.f));
 
 	// Add scrolling velocity
-	mDoodle->accelerate(0.f, 300.f);
+	//mDoodle->accelerate(0.f, 300.f);
 	
 
 

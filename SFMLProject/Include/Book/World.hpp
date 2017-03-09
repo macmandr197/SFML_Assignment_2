@@ -64,7 +64,7 @@ class World : private sf::NonCopyable
 		Doodle*								mDoodle;
 		sf::Texture							t2;
 		sf::Sprite							sPlat;
-		Platform*							mPlatform[10];
+		Platform*							mPlatform[20];
 };
 
 

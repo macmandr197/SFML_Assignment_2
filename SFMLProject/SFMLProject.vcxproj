@@ -138,6 +138,7 @@
     <ClInclude Include="Include\Book\SceneNode.hpp" />
     <ClInclude Include="Include\Book\SpriteNode.hpp" />
     <ClInclude Include="Include\Book\StringHelpers.hpp" />
+    <ClInclude Include="Include\Book\Utility.hpp" />
     <ClInclude Include="Include\Book\World.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +153,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="SpriteNode.cpp" />
+    <ClCompile Include="Utility.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

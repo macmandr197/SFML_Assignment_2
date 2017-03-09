@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <Book/Doodle.hpp>
+#include <iostream>
 
 
 struct DoodleMover
@@ -16,9 +17,11 @@ struct DoodleMover
 
 	void operator() (Doodle& doodle, sf::Time) const
 	{
-		doodle.accelerate(velocity);
+		doodle.setVelocity(velocity);
 		//test
 	}
+	
+		
 
 	sf::Vector2f velocity;
 };
@@ -31,7 +34,6 @@ Player::Player()
 
 	mKeyBinding[sf::Keyboard::Right] = MoveRight;
 	mKeyBinding[sf::Keyboard::D] = MoveRight;
-
 	mKeyBinding[sf::Keyboard::Up] = MoveUp;
 	mKeyBinding[sf::Keyboard::W] = MoveUp;
 
@@ -49,6 +51,7 @@ Player::Player()
 
 void Player::handleEvent(const sf::Event& event, CommandQueue& commands)
 {
+	
 	if (event.type == sf::Event::KeyPressed)
 	{
 		// Check if pressed key appears in key binding, trigger command if so
@@ -56,16 +59,19 @@ void Player::handleEvent(const sf::Event& event, CommandQueue& commands)
 		if (found != mKeyBinding.end() && !isRealtimeAction(found->second))
 			commands.push(mActionBinding[found->second]);
 	}
+	
+	
 }
 
 void Player::handleRealtimeInput(CommandQueue& commands)
 {
+
 	// Traverse all assigned keys and check if they are pressed
 	for(auto pair : mKeyBinding)
 	{
 		// If key is pressed, lookup action and trigger corresponding command
 		if (sf::Keyboard::isKeyPressed(pair.first) && isRealtimeAction(pair.second))
-			commands.push(mActionBinding[pair.second]);
+			commands.push(mActionBinding[pair.second]);		
 	}
 }
 
@@ -74,6 +80,7 @@ void Player::assignKey(Action action, sf::Keyboard::Key key)
 	// Remove all keys that already map to action
 	for (auto itr = mKeyBinding.begin(); itr != mKeyBinding.end(); )
 	{
+		
 		if (itr->second == action)
 			mKeyBinding.erase(itr++);
 		else
@@ -86,6 +93,7 @@ void Player::assignKey(Action action, sf::Keyboard::Key key)
 
 sf::Keyboard::Key Player::getAssignedKey(Action action) const
 {
+
 	for(auto pair : mKeyBinding)
 	{
 		if (pair.second == action)
@@ -119,6 +127,7 @@ bool Player::isRealtimeAction(Action action)
 		return true;
 
 	default:
+
 		return false;
 	}
 }
